@@ -125,7 +125,6 @@ function draw(){
 				enemy.active = false;
 				bullet.active = false;
 				score++;
-				console.log(score);
 			}
 		});
 	});
