@@ -133,8 +133,9 @@ function draw(){
 	enemies.forEach(function(enemy){
 		if(collision(enemy, player)){
 			enemy.active = false;
-			console.log("GAME OVER");
-			score = 0;
+			noLoop();
+			textSize(40);
+			text("GAME OVER", 180, 200);
 		}
 	});
 }
