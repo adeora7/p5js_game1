@@ -10,7 +10,7 @@ var player = {
 	height: 40,
 	draw : function(){
 		image(img_player, this.x, this.y, this.width, this.height);
-	}
+    },
 }
 
 
@@ -67,11 +67,25 @@ function collision(enemy, bullet){
 }
 //canvas functions 
 var img_enemy, img_player, img_bullet;
+var sound_enemy_dead, sound_player_dead, sound_bullet, sound_game_start;
+
 function preload(){
+    
+    //load images
 	img_enemy = loadImage("images/enemy.png");
 	img_player = loadImage("images/player.png");
 	img_bullet = loadImage("images/bullet.png");
-}
+    
+    //load sounds
+    sound_enemy_dead = loadSound("sounds/enemy_dead.wav"); //Creative Commons 0 License - https://freesound.org/people/qubodup/sounds/332056/
+    sound_bullet = loadSound("sounds/bullet.wav"); //Creative Commons 0 License - https://freesound.org/people/cabled_mess/sounds/350924/
+    sound_player_dead = loadSound("sounds/player_dead.wav"); //Creative Commons 0 License - https://freesound.org/people/n_audioman/sounds/276362/
+    sound_game_start = loadSound("sounds/game_start.wav") //Creative Commons 0 License - https://freesound.org/people/GameAudio/sounds/220209/
+    
+    //adjust sounds volumes if necessary
+    sound_bullet.setVolume(0.2);
+    
+}   
 function setup(){
 	createCanvas(canvasWidth, canvasHeight);
 	noCursor();
@@ -96,9 +110,10 @@ function draw(){
 	}
 	if(keyIsDown(32)){
 		bullets.push(Bullet({}));
+        sound_bullet.play();
 	}
-	player.draw();
 
+	player.draw();
 
 	bullets = bullets.filter(function(bullet){
 		return bullet.active;
@@ -125,6 +140,7 @@ function draw(){
 				enemy.active = false;
 				bullet.active = false;
 				score++;
+                sound_enemy_dead.play();
 			}
 		});
 	});
@@ -133,6 +149,7 @@ function draw(){
 		if(collision(enemy, player)){
 			enemy.active = false;
 			noLoop();
+            sound_player_dead.play();
 			textSize(40);
 			text("GAME OVER", 180, 200);
 		}
