@@ -11,9 +11,6 @@ var player = {
 	draw : function(){
 		image(img_player, this.x, this.y, this.width, this.height);
     },
-    draw_firing : function(){
-		image(img_player, this.x, random(this.y - 5, this.y + 5), this.width, this.height);
-	}
 }
 
 
